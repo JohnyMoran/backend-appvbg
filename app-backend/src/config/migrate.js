@@ -167,8 +167,8 @@ async function migrate() {
   const lugares = [
     // ── JUSTICIA ─────────────────────────────────────────────────
     { id:"fiscalia_tumaco", nombre:"Fiscalía General de la Nación", ciudad:"Tumaco", tipo:"justicia",
-      direccion:"Avenida de los Estudiantes Edificio Capid",
-      telefono:"122\n018000919748", whatsapp:null,
+      direccion:"Avenida los Estudiantes, Sector Miramar",
+      telefono:"122", whatsapp:null,
       horario:"Lunes a Viernes\n8:00am-12:00m\n2:00pm-6:00pm",
       descripcion:"Se encarga de investigar los posibles delitos, proteger a las víctimas y pedir medidas de protección.",
       icono:"justicia", latitud:1.8189894663045683, longitud:-78.7624061865076 },
@@ -210,15 +210,15 @@ async function migrate() {
 
     // ── PROTECCIÓN ───────────────────────────────────────────────
     { id:"comisaria_tumaco", nombre:"Comisaría de Familia", ciudad:"Tumaco", tipo:"protección",
-      direccion:"Alcaldía Municipal de Tumaco, Cl. 11 #9-2",
-      telefono:"(572)7276156", whatsapp:null,
+      direccion:"Casa de Justicia, Avenida los Estudiantes, Sector la Y",
+      telefono:"7276159", whatsapp:null,
       horario:"Lunes a Viernes\n8:00am-12:00m\n2:00pm-6:00pm",
       descripcion:"Establece medidas para cuidar, proteger y ayudar a las mujeres que son víctimas de violencia dentro de la familia.",
-      icono:"proteccion", latitud:1.807628096720489, longitud:-78.76544270423693 },
+      icono:"proteccion", latitud:1.8145480432037724, longitud:-78.76422545767173 },
 
     { id:"comisaria_buenaventura", nombre:"Comisaría de Familia", ciudad:"Buenaventura", tipo:"protección",
       direccion:"Calle 4 sur Cra 73 esquina, Barrio Nueva Granada",
-      telefono:"3170820627", whatsapp:null,
+      telefono:"3123734559", whatsapp:null,
       horario:"Lunes a Viernes\n8:00am-12:00m\n2:00pm-5:00pm",
       descripcion:"Establece medidas para cuidar, proteger y ayudar a las mujeres que son víctimas de violencia dentro de la familia.",
       icono:"proteccion", latitud:3.8636936635472394, longitud:-76.99349771772933 },
@@ -239,13 +239,13 @@ async function migrate() {
 
     { id:"icbf_tumaco", nombre:"Instituto de Bienestar Familiar", ciudad:"Tumaco", tipo:"protección",
       direccion:"Parque Colón, San Andrés de Tumaco - Nariño",
-      telefono:"601 4377630", whatsapp:null,
+      telefono:"57(601) 437 76 30 Ext: 233014 - 233015", whatsapp:null,
       horario:"Lunes a Viernes\n8:00am-5:00pm",
       descripcion:"Ayuda a garantizar la seguridad de los menores de edad.",
       icono:"proteccion", latitud:1.8067567142886514, longitud:-78.76358307116412 },
 
     { id:"icbf_buenaventura", nombre:"Instituto de Bienestar Familiar", ciudad:"Buenaventura", tipo:"protección",
-      direccion:"Avenida Simón Bolívar Km 9",
+      direccion:"Avenida Simón Bolívar, diagonal al barrio Transformación",
       telefono:"3215744988", whatsapp:null,
       horario:"Lunes a Viernes\n8:00am-5:00pm",
       descripcion:"Ayuda a garantizar la seguridad de los menores de edad.",
@@ -267,15 +267,15 @@ async function migrate() {
       icono:"ministerio_publico", latitud:3.889324893936952, longitud:-77.07458247952376 },
 
     { id:"defensoria_del_pueblo_tumaco", nombre:"Defensoría del Pueblo", ciudad:"Tumaco", tipo:"ministerio_publico",
-      direccion:"Barrio la Florida La Rada T-35-20 Casa 1, vía al aeropuerto",
+      direccion:"Calle Santander",
       telefono:"3223866321", whatsapp:null,
       horario:"Lunes a Viernes\n8:00am-5:00pm",
       descripcion:"Debe promover, cuidar y defender los derechos de las mujeres.",
-      icono:"ministerio_publico", latitud:1.816355213407996, longitud:-78.75348661534346 },
+      icono:"ministerio_publico", latitud:1.80805810815122, longitud:-78.76547818650761 },
 
     { id:"defensoria_del_pueblo_buenaventura", nombre:"Defensoría del Pueblo", ciudad:"Buenaventura", tipo:"ministerio_publico",
-      direccion:"Calle 1 No. 7 51 Barrio Pueblo Nuevo",
-      telefono:"", whatsapp:null,
+      direccion:"Cl. 2° Sur #7-228",
+      telefono:"3134092554", whatsapp:null,
       horario:"Lunes a Viernes\n8:00am-5:00pm",
       descripcion:"Debe promover, cuidar y defender los derechos de las mujeres.",
       icono:"ministerio_publico", latitud:3.884417202372204, longitud:-77.07540222883586 },
@@ -285,9 +285,9 @@ async function migrate() {
       telefono:"(572)7271201", whatsapp:null,
       horario:"Martes a Viernes\n8:00am-12:30pm\n2:00pm-6:00pm",
       descripcion:"Debe promover, cuidar y defender los derechos de las mujeres.",
-      icono:"ministerio_publico", latitud:1.8076602672107762, longitud:-78.76582894232826 },
+      icono:"ministerio_publico", latitud:1.8060228789437267, longitud:-78.76924000059647 },
 
-    { id:"personería_municipal_buenaventura", nombre:"Personería Municipal", ciudad:"Buenaventura", tipo:"ministerio_publico",
+    { id:"personería_municipal_buenaventura", nombre:"Personería Distrital", ciudad:"Buenaventura", tipo:"ministerio_publico",
       direccion:"Calle segunda edificio el CAD, piso # 10",
       telefono:"3116073104\n2978928", whatsapp:null,
       horario:"8:00am-12:00pm\n2:00pm-6:00pm",
@@ -297,28 +297,28 @@ async function migrate() {
     // ── SALUD ────────────────────────────────────────────────────
     { id:"hospital_san_andres", nombre:"Hospital San Andrés E.S.E.", ciudad:"Tumaco", tipo:"salud",
       direccion:"Km 23 Inguapi del Carmen",
-      telefono:"3203757591", whatsapp:null,
+      telefono:"3184096662", whatsapp:null,
       horario:"24 horas",
       descripcion:"Dar atención tanto física como psicológica a la persona.",
       icono:"salud", latitud:1.67234769600039, longitud:-78.75234138465652 },
 
     { id:"ips_puente_medio", nombre:"IPS Puente del Medio", ciudad:"Tumaco", tipo:"salud",
       direccion:"Sede 1: Calle Santander / Sede 2: Avenida Los Estudiantes",
-      telefono:"7271556", whatsapp:null,
+      telefono:"3160259999\n3242661258\n3156016279", whatsapp:null,
       horario:"24 horas",
       descripcion:"Entidad de segundo nivel de complejidad.",
       icono:"salud", latitud:1.8077449316847172, longitud:-78.76428676931305 },
 
     { id:"divino_nino", nombre:"Centro Hospital Divino Niño E.S.E.", ciudad:"Tumaco", tipo:"salud",
       direccion:"Barrio Nuevo Horizonte",
-      telefono:"3027270404\n927271556", whatsapp:null,
+      telefono:"3027270404", whatsapp:null,
       horario:"24 horas",
       descripcion:"Dar atención tanto física como psicológica a la persona.",
       icono:"salud", latitud:1.788207639589229, longitud:-78.78844703862607 },
 
     { id:"ips_los_angeles", nombre:"IPS Los Ángeles", ciudad:"Tumaco", tipo:"salud",
       direccion:"Calle 11 #9-2, Tumaco",
-      telefono:"7276712\n3175383956", whatsapp:null,
+      telefono:"3205041354", whatsapp:null,
       horario:"7:00am-6:00pm",
       descripcion:"Evaluaciones médicas y peritajes.",
       icono:"salud", latitud:1.8135852452074122, longitud:-78.76634640553385 },
@@ -331,8 +331,8 @@ async function migrate() {
       icono:"salud", latitud:3.8769602550930453, longitud:-77.00452831305293 },
 
     { id:"hospital_luis_ablanque_bellavista", nombre:"Centro de Salud Bellavista (Hospital Luis Ablanque de la Plata)", ciudad:"Buenaventura", tipo:"salud",
-      direccion:"Cra. 47 #22 a 2-84, Buenaventura",
-      telefono:"2437441", whatsapp:null,
+      direccion:"Barrio Jorge, Cra. 47 #22A-2-84",
+      telefono:"3123734529", whatsapp:null,
       horario:"24 horas",
       descripcion:"Dar atención tanto física como psicológica a la persona.",
       icono:"salud", latitud:3.8801200620969247, longitud:-77.02059020262098 },
@@ -346,7 +346,7 @@ async function migrate() {
 
     { id:"clinica_santa_sofia", nombre:"Clínica Santa Sofía del Pacífico", ciudad:"Buenaventura", tipo:"salud",
       direccion:"Cra. 47 #42, Buenaventura",
-      telefono:"22421880", whatsapp:null,
+      telefono:"3123736537\n22421880", whatsapp:null,
       horario:"24 horas",
       descripcion:"Dar atención tanto física como psicológica a la persona.",
       icono:"salud", latitud:3.8808727013535913, longitud:-77.02026621485183 },
@@ -366,9 +366,9 @@ async function migrate() {
       icono:"salud", latitud:3.87618058199835, longitud:-77.00463557473458 },
 
     // ── DUPLAS ───────────────────────────────────────────────────
-    { id:"dupla_tumaco", nombre:"Dupla de Atención a Víctimas", ciudad:"Tumaco", tipo:"duplas",
-      direccion:"Alcaldía Municipal de Tumaco, Cl. 11 #9-2",
-      telefono:"(572)7276156", whatsapp:"3170820627",
+    { id:"dupla_tumaco", nombre:"Dupla de Género Secretaría de la Mujer, Equidad y Género, Alcaldia Distrital de Tumaco", ciudad:"Tumaco", tipo:"duplas",
+      direccion:"Calle Nueva Creación con Popayán",
+      telefono:"3173694360", whatsapp:"3170820627",
       horario:"Lunes a Viernes\n8:00am-12:00m\n2:00pm-6:00pm",
       descripcion:"Establece medidas para cuidar, proteger y ayudar a las mujeres que son víctimas de violencia dentro de la familia.",
       icono:"proteccion", latitud:1.807628096720489, longitud:-78.76544270423693 },
@@ -379,6 +379,21 @@ async function migrate() {
       horario:"Lunes a Viernes\n8:00am-12:00m\n2:00pm-5:00pm",
       descripcion:"Establece medidas para cuidar, proteger y ayudar a las mujeres que son víctimas de violencia dentro de la familia.",
       icono:"proteccion", latitud:3.8636936635472394, longitud:-76.99349771772933 },
+
+    // ── NUEVOS ────────────────────────────────────────────────────
+    { id:"centro_salud_maria_mulumba", nombre:"Centro de Salud María Mulumba", ciudad:"Buenaventura", tipo:"salud",
+      direccion:"Cl. 1 #74-51",
+      telefono:"-", whatsapp:null,
+      horario:"24 horas",
+      descripcion:"Dar atención tanto física como psicológica a la persona.",
+      icono:"salud", latitud:3.8802699214913403, longitud:-77.02046145659054 },
+
+    { id:"secretaria_mujeres_buenaventura", nombre:"Secretaría de las Mujeres, Equidad de Género e Igualdad de Derechos", ciudad:"Buenaventura", tipo:"protección",
+      direccion:"Barrio Los Pinos, Calle 5 No. 63A-58",
+      telefono:"3218440784", whatsapp:null,
+      horario:"Lunes a Viernes\n8:00am-5:00pm",
+      descripcion:"Promover, proteger y garantizar los derechos de las mujeres.",
+      icono:"proteccion", latitud:3.872808966, longitud:-77.0005967 },
   ];
 
   for (const l of lugares) {
@@ -396,6 +411,37 @@ async function migrate() {
     ]);
   }
   console.log(`✅ ${lugares.length} lugares importados`);
+
+  // ════════════════════════════════════════════════════════════════
+  // 5b. ACTUALIZACIÓN DE LUGARES (correcciones 2026)
+  //     Se aplican sobre registros que ya existen en BD.
+  // ════════════════════════════════════════════════════════════════
+  const updates = [
+    // Tumaco
+    `UPDATE lugares SET telefono='3184096662' WHERE id='hospital_san_andres'`,
+    `UPDATE lugares SET telefono='3027270404' WHERE id='divino_nino'`,
+    `UPDATE lugares SET telefono='3160259999\n3242661258\n3156016279' WHERE id='ips_puente_medio'`,
+    `UPDATE lugares SET telefono='3205041354' WHERE id='ips_los_angeles'`,
+    `UPDATE lugares SET direccion='Casa de Justicia, Avenida los Estudiantes, Sector la Y', telefono='7276159', latitud=1.8145480432037724, longitud=-78.76422545767173 WHERE id='comisaria_tumaco'`,
+    `UPDATE lugares SET telefono='57(601) 437 76 30 Ext: 233014 - 233015' WHERE id='icbf_tumaco'`,
+    `UPDATE lugares SET direccion='Avenida los Estudiantes, Sector Miramar', telefono='122' WHERE id='fiscalia_tumaco'`,
+    `UPDATE lugares SET direccion='Calle Santander', latitud=1.80805810815122, longitud=-78.76547818650761 WHERE id='defensoria_del_pueblo_tumaco'`,
+    `UPDATE lugares SET nombre='Dupla de Género Secretaría de la Mujer, Equidad y Género, Alcaldia Distrital de Tumaco', direccion='Calle Nueva Creación con Popayán', telefono='3173694360' WHERE id='dupla_tumaco'`,
+    `UPDATE lugares SET latitud=1.8060228789437267, longitud=-78.76924000059647 WHERE id='personería_municipal_tumaco'`,
+    // Buenaventura
+    `UPDATE lugares SET telefono='3123734529', direccion='Barrio Jorge, Cra. 47 #22A-2-84' WHERE id='hospital_luis_ablanque_bellavista'`,
+    `UPDATE lugares SET telefono='3123736537\n22421880' WHERE id='clinica_santa_sofia'`,
+    `UPDATE lugares SET telefono='3123734559' WHERE id='comisaria_buenaventura'`,
+    `UPDATE lugares SET telefono='3134092554', direccion='Cl. 2° Sur #7-228' WHERE id='defensoria_del_pueblo_buenaventura'`,
+    `UPDATE lugares SET direccion='Avenida Simón Bolívar, diagonal al barrio Transformación' WHERE id='icbf_buenaventura'`,
+    `UPDATE lugares SET nombre='Personería Distrital' WHERE id='personería_municipal_buenaventura'`,
+    // Soft deletes
+    `UPDATE lugares SET activo=false WHERE id IN ('cti_tumaco','procuraduria_general_de_nacion_tumaco','hospital_departamental_buenaventura')`,
+  ];
+  for (const sql of updates) {
+    await pool.query(sql);
+  }
+  console.log(`✅ ${updates.length} actualizaciones de lugares aplicadas`);
 
   // ════════════════════════════════════════════════════════════════
   // 6. SEED: Números de emergencia
