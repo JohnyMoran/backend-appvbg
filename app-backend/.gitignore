@@ -1,0 +1,4 @@
+node_modules/
+.env
+uploads/iconos-lugares/*
+!uploads/iconos-lugares/.gitkeep
