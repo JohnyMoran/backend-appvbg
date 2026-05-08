@@ -2,7 +2,7 @@ export interface Admin {
   id: number;
   nombre: string;
   email: string;
-  rol: string;
+  rol: 'superadmin' | 'admin' | 'viewer';
 }
 
 export interface LoginResponse {

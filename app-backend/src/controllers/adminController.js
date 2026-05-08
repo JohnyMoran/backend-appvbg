@@ -19,15 +19,21 @@ exports.listar = async (req, res) => {
 };
 
 // ── POST /api/admin/usuarios ──────────────────────────────────────────────────
-// Crea un nuevo administrador
+// Crea un nuevo administrador. superadmin puede crear cualquier rol;
+// admin solo puede crear viewers.
 exports.crear = async (req, res) => {
-  const { nombre, email, password, rol = "admin" } = req.body;
+  const { nombre, email, password, rol = "viewer" } = req.body;
   if (!nombre?.trim()) return res.status(400).json({ error: "El nombre es obligatorio" });
   if (!email?.trim())  return res.status(400).json({ error: "El email es obligatorio" });
   if (!password || password.length < 8)
     return res.status(400).json({ error: "La contraseña debe tener al menos 8 caracteres" });
-  if (!["admin", "superadmin"].includes(rol))
-    return res.status(400).json({ error: "Rol inválido" });
+
+  const rolesPermitidos = req.admin.rol === "superadmin"
+    ? ["superadmin", "admin", "viewer"]
+    : ["viewer"];
+
+  if (!rolesPermitidos.includes(rol))
+    return res.status(403).json({ error: `No tienes permiso para crear usuarios con rol "${rol}"` });
 
   try {
     // Verificar email duplicado
@@ -94,12 +100,14 @@ exports.actualizar = async (req, res) => {
 };
 
 // ── PUT /api/admin/usuarios/:id/password ──────────────────────────────────────
-// Cambia la contraseña de un usuario. Un superadmin puede cambiar la de cualquiera;
-// un admin solo puede cambiar la propia y debe confirmar la contraseña actual.
+// Cambia la contraseña de un usuario.
+// superadmin: puede cambiar la de cualquiera (sin password actual).
+// admin: puede cambiar la propia (con password actual) o la de viewers (sin password actual).
+// viewer: solo puede cambiar la propia (con password actual).
 exports.cambiarPassword = async (req, res) => {
   const { id } = req.params;
   const { password_actual, password_nueva } = req.body;
-  const solicitante = req.admin; // viene del middleware auth
+  const solicitante = req.admin;
 
   if (!password_nueva || password_nueva.length < 8)
     return res.status(400).json({ error: "La nueva contraseña debe tener al menos 8 caracteres" });
@@ -112,11 +120,17 @@ exports.cambiarPassword = async (req, res) => {
 
     const objetivo = rows[0];
 
-    // Si el solicitante no es superadmin y está intentando cambiar la de otro → denegar
-    if (solicitante.rol !== "superadmin" && String(solicitante.id) !== String(id))
-      return res.status(403).json({ error: "No tienes permiso para cambiar la contraseña de otro usuario" });
+    // viewer solo puede cambiar su propia contraseña
+    if (solicitante.rol === "viewer" && String(solicitante.id) !== String(id))
+      return res.status(403).json({ error: "No tienes permiso para cambiar otras contraseñas" });
 
-    // Si no es superadmin (o es el mismo usuario), exigir contraseña actual
+    // admin puede cambiar propia o de viewers, no de otros admins ni superadmin
+    if (solicitante.rol === "admin"
+        && String(solicitante.id) !== String(id)
+        && objetivo.rol !== "viewer")
+      return res.status(403).json({ error: "Solo puedes cambiar contraseñas de usuarios viewer" });
+
+    // Exigir password actual si: no es superadmin, o es el mismo usuario
     if (solicitante.rol !== "superadmin" || String(solicitante.id) === String(id)) {
       if (!password_actual)
         return res.status(400).json({ error: "Debes ingresar tu contraseña actual" });

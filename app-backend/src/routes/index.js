@@ -61,12 +61,12 @@ router.patch ("/admin/emergencias/:id",  auth, emergenciaCtrl.patchEmergencia);
 router.delete("/admin/emergencias/:id",  auth, emergenciaCtrl.eliminar);
 
 // ── Panel admin: gestión de usuarios administradores ─────────────────────────
-// Solo superadmin puede crear y desactivar usuarios. Todos los admins pueden ver la lista
-// y cambiar su propia contraseña.
-router.get   ("/admin/usuarios",             auth, adminCtrl.listar);
-router.post  ("/admin/usuarios",             auth, adminCtrl.crear);
-router.put   ("/admin/usuarios/:id",         auth, adminCtrl.actualizar);
-router.put   ("/admin/usuarios/:id/password",auth, adminCtrl.cambiarPassword);
-router.delete("/admin/usuarios/:id",         auth, adminCtrl.desactivar);
+// superadmin: todo. admin: solo crear viewers y cambiar passwords de viewers.
+// viewer: no tiene acceso a usuarios.
+router.get   ("/admin/usuarios",             auth, auth.role("superadmin","admin"), adminCtrl.listar);
+router.post  ("/admin/usuarios",             auth, auth.role("superadmin","admin"), adminCtrl.crear);
+router.put   ("/admin/usuarios/:id",         auth, auth.role("superadmin"),         adminCtrl.actualizar);
+router.put   ("/admin/usuarios/:id/password",auth,                                  adminCtrl.cambiarPassword);
+router.delete("/admin/usuarios/:id",         auth, auth.role("superadmin"),         adminCtrl.desactivar);
 
 module.exports = router;

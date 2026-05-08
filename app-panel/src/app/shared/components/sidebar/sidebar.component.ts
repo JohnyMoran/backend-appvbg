@@ -58,7 +58,8 @@ import { AuthService } from '../../../core/services/auth.service';
         <!-- Separador -->
         <div class="nav-separator"></div>
 
-        <a routerLink="/usuarios" routerLinkActive="active" class="nav-item">
+        <a routerLink="/usuarios" routerLinkActive="active" class="nav-item"
+           *ngIf="(admin$ | async)?.rol !== 'viewer'">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="8" r="4"/>
             <path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>

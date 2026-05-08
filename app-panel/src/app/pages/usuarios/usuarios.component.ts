@@ -11,7 +11,7 @@ interface AdminUser {
   id: string;
   nombre: string;
   email: string;
-  rol: 'admin' | 'superadmin';
+  rol: 'superadmin' | 'admin' | 'viewer';
   activo: boolean;
   creado_en: string;
 }
@@ -32,7 +32,7 @@ type Modal = null | 'crear' | 'editar' | 'password' | 'confirm-desactivar';
             <h2>Gestión de usuarios</h2>
             <p>Administra las cuentas de acceso al panel</p>
           </div>
-          <button class="btn-add" (click)="abrirCrear()">
+          <button class="btn-add" *ngIf="currentUserRole !== 'viewer'" (click)="abrirCrear()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
@@ -68,8 +68,14 @@ type Modal = null | 'crear' | 'editar' | 'password' | 'confirm-desactivar';
                 </td>
                 <td class="email-cell">{{ u.email }}</td>
                 <td>
-                  <span class="rol-pill" [class.superadmin]="u.rol === 'superadmin'">
-                    {{ u.rol === 'superadmin' ? '⭐ Superadmin' : 'Admin' }}
+                  <span class="rol-pill"
+                        [class.superadmin]="u.rol === 'superadmin'"
+                        [class.viewer]="u.rol === 'viewer'">
+                    <ng-container [ngSwitch]="u.rol">
+                      <span *ngSwitchCase="'superadmin'">⭐ Superadmin</span>
+                      <span *ngSwitchCase="'admin'">Admin</span>
+                      <span *ngSwitchCase="'viewer'">👁 Viewer</span>
+                    </ng-container>
                   </span>
                 </td>
                 <td>
@@ -80,7 +86,7 @@ type Modal = null | 'crear' | 'editar' | 'password' | 'confirm-desactivar';
                 <td class="fecha-cell">{{ u.creado_en | date:'dd/MM/yyyy' }}</td>
                 <td>
                   <div class="actions">
-                    <button class="btn-icon btn-edit" (click)="abrirEditar(u)" title="Editar datos">
+                    <button class="btn-icon btn-edit" *ngIf="currentUserRole === 'superadmin'" (click)="abrirEditar(u)" title="Editar datos">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
@@ -94,7 +100,7 @@ type Modal = null | 'crear' | 'editar' | 'password' | 'confirm-desactivar';
                       </svg>
                     </button>
                     <button class="btn-icon btn-delete"
-                            *ngIf="!esMiCuenta(u.id) && u.activo"
+                            *ngIf="currentUserRole === 'superadmin' && !esMiCuenta(u.id) && u.activo"
                             (click)="confirmarDesactivar(u)"
                             title="Desactivar usuario">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -145,10 +151,16 @@ type Modal = null | 'crear' | 'editar' | 'password' | 'confirm-desactivar';
                 <div class="field">
                   <label>Rol</label>
                   <select [(ngModel)]="formCrear.rol">
-                    <option value="admin">Admin</option>
-                    <option value="superadmin">Superadmin</option>
+                    <ng-container *ngIf="currentUserRole === 'superadmin'">
+                      <option value="superadmin">Superadmin</option>
+                      <option value="admin">Admin</option>
+                    </ng-container>
+                    <option value="viewer">Viewer</option>
                   </select>
-                  <small>Superadmin puede gestionar usuarios y contraseñas de todos.</small>
+                  <small>
+                    <ng-container *ngIf="currentUserRole === 'admin'">Solo puedes crear usuarios Viewer.</ng-container>
+                    <ng-container *ngIf="currentUserRole === 'superadmin'">Superadmin: acceso total. Admin solo puede crear viewers.</ng-container>
+                  </small>
                 </div>
               </div>
               <div class="form-error" *ngIf="formError">⚠️ {{ formError }}</div>
@@ -218,10 +230,11 @@ type Modal = null | 'crear' | 'editar' | 'password' | 'confirm-desactivar';
               <div class="info-box" *ngIf="esMiCuenta(usuarioSeleccionado?.id)">
                 ℹ️ Estás cambiando <strong>tu propia contraseña</strong>. Deberás ingresar la actual.
               </div>
+              <div class="info-box" *ngIf="!requierePasswordActual()">
+                ℹ️ Estás cambiando la contraseña de un usuario. No se requiere contraseña actual.
+              </div>
               <div class="form-grid">
-                <!-- Solo mostrar campo "contraseña actual" si es su propia cuenta -->
-                <div class="field full"
-                     *ngIf="esMiCuenta(usuarioSeleccionado?.id)">
+                <div class="field full" *ngIf="requierePasswordActual()">
                   <label>Contraseña actual <span class="req">*</span></label>
                   <div class="pwd-wrap">
                     <input [type]="mostrarPwdActual ? 'text' : 'password'"
@@ -354,6 +367,7 @@ type Modal = null | 'crear' | 'editar' | 'password' | 'confirm-desactivar';
                 background:#f5eefa; color:#82368C; }
     .rol-pill.superadmin { background:linear-gradient(135deg,rgba(130,54,140,0.15),rgba(128,26,211,0.1));
                            color:#5b1f72; border:1px solid rgba(130,54,140,0.2); }
+    .rol-pill.viewer { background:#f0f9ff; color:#0369a1; border:1px solid rgba(14,165,233,0.2); }
     .actions { display:flex; gap:4px; }
     .btn-icon { width:30px; height:30px; border-radius:8px; border:none; cursor:pointer;
                 display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
@@ -438,14 +452,18 @@ export class UsuariosComponent implements OnInit {
 
   usuarioSeleccionado: AdminUser | null = null;
 
-  formCrear  = { nombre: '', email: '', password: '', rol: 'admin' as 'admin' | 'superadmin' };
-  formEditar = { nombre: '', email: '', rol: 'admin' as 'admin' | 'superadmin', activo: true };
+  formCrear  = { nombre: '', email: '', password: '', rol: 'viewer' as 'superadmin' | 'admin' | 'viewer' };
+  formEditar = { nombre: '', email: '', rol: 'admin' as 'superadmin' | 'admin' | 'viewer', activo: true };
   formPassword = { password_actual: '', password_nueva: '', confirmar: '' };
 
   mostrarPwd        = false;
   mostrarPwdActual  = false;
   mostrarPwdNueva   = false;
   mostrarPwdConfirm = false;
+
+  get currentUserRole(): string {
+    return this.authService['adminSubject']?.value?.rol || '';
+  }
 
   private readonly base = environment.apiUrl;
   private get headers() {
@@ -483,8 +501,16 @@ export class UsuariosComponent implements OnInit {
     return !!id && !!admin && String(admin.id) === String(id);
   }
 
+  requierePasswordActual(): boolean {
+    if (this.currentUserRole === 'superadmin' && !this.esMiCuenta(this.usuarioSeleccionado?.id))
+      return false;
+    if (this.currentUserRole === 'admin' && this.usuarioSeleccionado?.rol === 'viewer')
+      return false;
+    return true;
+  }
+
   abrirCrear() {
-    this.formCrear  = { nombre: '', email: '', password: '', rol: 'admin' };
+    this.formCrear  = { nombre: '', email: '', password: '', rol: this.currentUserRole === 'superadmin' ? 'admin' : 'viewer' };
     this.formError  = '';
     this.mostrarPwd = false;
     this.modal = 'crear';
@@ -579,9 +605,18 @@ export class UsuariosComponent implements OnInit {
       this.formError = 'Las contraseñas no coinciden.'; return;
     }
 
+    const id = this.usuarioSeleccionado!.id;
+
+    // admin solo puede cambiar passwords de viewers (además de la propia)
+    if (this.currentUserRole === 'admin'
+        && !this.esMiCuenta(id)
+        && this.usuarioSeleccionado?.rol !== 'viewer') {
+      this.formError = 'No tienes permiso para cambiar esta contraseña';
+      return;
+    }
+
     this.guardando = true;
     this.formError = '';
-    const id = this.usuarioSeleccionado!.id;
     this.http.put(
       `${this.base}/admin/usuarios/${id}/password`,
       {
