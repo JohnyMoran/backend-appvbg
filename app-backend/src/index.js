@@ -10,6 +10,8 @@ const routes    = require("./routes");
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
+app.set("trust proxy", 1);
+
 // ── Archivos estáticos ──────────────────────────
 app.use("/uploads",
   (req, res, next) => {
@@ -20,12 +22,12 @@ app.use("/uploads",
 );
 
 // ── Seguridad HTTP ────────────────────────────────────────────────
-app.use(helmet());
+app.use(helmet({ crossOriginResourcePolicy: false }));
 
 // ── CORS ──────────────────────────────────────────────────────────
 app.use(cors({
   origin: [
-    process.env.CORS_ORIGIN,
+    process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",").map(s => s.trim()) : [],
     "http://localhost:8081",
     /^exp:\/\//,
   ],

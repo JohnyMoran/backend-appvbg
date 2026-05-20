@@ -153,13 +153,14 @@ async function migrate() {
   // ════════════════════════════════════════════════════════════════
   // 4. SEED: Admin
   // ════════════════════════════════════════════════════════════════
-  const hash = await bcrypt.hash("Admin2026*", 10);
+  const adminPassword = process.env.ADMIN_PASSWORD || "Admin2026*";
+  const hash = await bcrypt.hash(adminPassword, 10);
   await pool.query(`
     INSERT INTO admins (nombre, email, password, rol)
     VALUES ($1,$2,$3,$4)
     ON CONFLICT (email) DO NOTHING
   `, ["Administrador", "admin@perla.com", hash, "superadmin"]);
-  console.log("✅ Admin → admin@perla.com / Admin2026*");
+  console.log("✅ Admin → admin@perla.com (contraseña desde ADMIN_PASSWORD env var)");
 
   // ════════════════════════════════════════════════════════════════
   // 5. SEED: Lugares
