@@ -10,6 +10,10 @@ const estadisticasCtrl= require("../controllers/estadisticasController");
 const lugaresCtrl      = require("../controllers/lugaresController");
 const emergenciaCtrl   = require("../controllers/emergenciaController");
 const adminCtrl       = require("../controllers/adminController");
+const termsController = require("../controllers/termsController");
+
+// ── Términos y Condiciones ────────────────────────────────────────
+router.get("/terminos", termsController.getTerms);
 
 // ── Health ────────────────────────────────────────────────────────
 router.get("/health", (_, res) => res.json({ status: "ok", time: new Date() }));
